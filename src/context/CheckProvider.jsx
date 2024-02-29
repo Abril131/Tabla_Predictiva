@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useMemo, useState } from "react";
-import { grammar, preddict_table } from "../data/producctions_stack";
+import { grammar, tabla_predic } from "../data/producctions_stack";
 
 import CheckContext from "./CheckContext";
 
@@ -54,9 +54,10 @@ const CheckProvider = ({ children }) => {
       { symbol: "R", isTerminal: false },
     ];
     let codeStack = code
-      .match(/([a-zA-Z_]\w*|\S)/g)
-      .join(".")
-      .split(".");
+       .match(/([a-zA-Z_]\w*|>=|<=|==|\S)/g)
+        .join(".")
+        .split(".");
+
     await addMessage("La pila es:" + JSON.stringify(stack));
     await addMessage("La cadena a evaluar es:" + JSON.stringify(codeStack));
 
@@ -94,10 +95,10 @@ const CheckProvider = ({ children }) => {
   }
 
   async function findProduction(noTerminal, token) {
-    let tokenIndex = preddict_table.col.findIndex(regex => regex.test(token));
+    let tokenIndex = tabla_predic.col.findIndex(regex => regex.test(token));
     await addDebugMessage(`El token es: ${token}, el indice es: ${tokenIndex} y el no terminal es: ${noTerminal}`);
     if (tokenIndex !== -1) {
-      let production = preddict_table[noTerminal][tokenIndex];
+      let production = tabla_predic[noTerminal][tokenIndex];
       await addDebugMessage(`La produccion es: ${JSON.stringify(production)}`);
       if (grammar[production] !== null && grammar[production] !== undefined) {
         return grammar[production];

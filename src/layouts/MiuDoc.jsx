@@ -3,11 +3,11 @@ import CodeCard from "../components/CodeCard";
 function MiuDoc() {
   const ExamplesCodes = [
     {
-      title: "Tabla Predictiva",
+      title: "Tabla Predictiva :)",
       content: [
         {
           subtitle: "Ejemplo",
-          code: `mientras ()`,
+          code: `mientras (a and b)`,
         }
       ],
     }

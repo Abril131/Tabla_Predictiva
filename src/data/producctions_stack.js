@@ -6,7 +6,7 @@ const grammar = {
   C: [
     { regex: /^\($/, isTerminal: true },
     { symbol: "E", isTerminal: false },
-    { symbol: "O", isTerminal: false},
+    { symbol: "OP", isTerminal: false},
     { regex: /^\)$/, isTerminal: true},
   ],
   E: [
@@ -26,11 +26,7 @@ const grammar = {
     { regex:  /^[a-z]+$/, isTerminal: true},
   ],
   O: [
-    { regex: /^<$/, isTerminal: true },
-    { regex: /^>$/, isTerminal: true },
-    { regex: /^==$/, isTerminal: true },
-    { regex: /^>=$/, isTerminal: true },
-    { regex: /^<=$/, isTerminal: true },
+    { regex: /^(>|<|==|>=|<=)$/, isTerminal: true },
   ],
   OP: [{ symbol: "LO", isTerminal: false },
     { symbol: "E", isTerminal: false },],
@@ -38,17 +34,18 @@ const grammar = {
     { regex: /^or$/, isTerminal: true }],
   vacio: [],
 };
-const preddict_table = {
+
+const tabla_predic = {
   col: [/mientras/, /\(/, /[a-z]/, /and/, /or/, /\)/, /</, />/, /==/, />=/, /<=/],
   R: ["R", null, null, null, null, null, null, null, null, null, null],
   C: [null, "C", null, null, null, null, null, null, null, null, null],
   E: [null, null, "E", null, null, null, null, null, null, null, null],
-  V: [null, null, "V", null, null, null, null, null, null, null, null],
+  V: [null, null, "V", null, null, "vacio", null, null, null, null, null], //and va una vacio
   RE: [null, null, "RE", "vacio", "vacio", "vacio", "vacio", "vacio", "vacio", "vacio","vacio"],
-  L: [null, null, "L", null, null, null, null, null, null, null, null],
-  O: [null, null, null, null, null, null, "O", "O", "O", "O", "O"],
+  L: [null, "vacio", "L", null, null, null, null, null, null, null, null],
+  O: [null, "vacio", null, null, null, "vacio", "O", "O", "O", "O", "O"],
   OP: [null, null, null, "OP", "OP", "vacio", null, null, null, null, null],
   LO: [null, null, null, "LO", "LO", null, null, null, null, null, null],
 };
 
-export { grammar, preddict_table };
+export { grammar, tabla_predic };
